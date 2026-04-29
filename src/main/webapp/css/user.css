@@ -1,0 +1,259 @@
+:root {
+    --bg-1: #0b1220;
+    --bg-2: #111c34;
+    --panel: #f8fbff;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #5b6b83;
+    --brand: #4f7cff;
+    --brand-2: #6d4dff;
+    --line: #dbe6f4;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle at 10% 10%, #16284a, transparent 28%),
+                radial-gradient(circle at 90% 0%, #2b1460, transparent 24%),
+                linear-gradient(145deg, var(--bg-1), var(--bg-2));
+    color: var(--text);
+}
+
+/* SIDEBAR */
+.sidebar {
+    height: auto;
+    min-height: 100%;
+    background: linear-gradient(180deg, #111a2f, #1b2f57 45%, #1e40af);
+    color: white;
+    padding-top: 20px;
+    border-radius: 16px;
+    position: sticky;
+    top: 16px;
+}
+
+.sidebar h5 {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.sidebar small {
+    color: rgba(224, 242, 254, 0.72) !important;
+}
+
+.sidebar a {
+    color: #dbeafe;
+    padding: 11px 14px;
+    display: block;
+    margin: 6px 0;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    transition: 0.25s ease;
+}
+
+.sidebar a:hover {
+    background: rgba(79, 124, 255, 0.2);
+    color: #ffffff;
+    border-color: rgba(147, 197, 253, 0.35);
+}
+
+/* CONTENT */
+.content {
+    padding: 18px 16px;
+}
+
+/* HEADER */
+.dashboard-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+/* CARDS */
+.card-box {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 18px;
+    text-align: center;
+    box-shadow: 0 12px 24px rgba(11, 18, 32, 0.08);
+    transition: 0.25s ease;
+    border: 1px solid var(--line);
+}
+
+.card-box:hover {
+    transform: translateY(-5px);
+}
+
+/* MAIN CARD */
+.main-card {
+    background: var(--panel);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 16px 30px rgba(11, 18, 32, 0.1);
+    border: 1px solid var(--line);
+}
+
+/* PLAN CARDS */
+.plan-card {
+    border-radius: 18px;
+    padding: 20px;
+    background: linear-gradient(145deg, #ffffff, #f1f7ff);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    position: relative;
+}
+
+.plan-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+/* POPULAR */
+.plan-popular {
+    border: 2px solid var(--brand);
+}
+
+/* TAG */
+.tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, var(--brand), var(--brand-2));
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* PRICE */
+.price {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* BUTTON */
+.buy-btn {
+    border-radius: 30px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.buy-btn:hover {
+    transform: scale(1.05);
+}
+
+.dashboard-wrap {
+    min-height: 100vh;
+}
+
+.dashboard-shell {
+    background: rgba(255, 255, 255, 0.94);
+    border-radius: 20px;
+    border: 1px solid rgba(219, 230, 244, 0.9);
+    box-shadow: 0 22px 44px rgba(6, 10, 22, 0.26);
+    padding: 14px;
+}
+
+.welcome-banner {
+    background: linear-gradient(120deg, #0f172a, #1f3f8f 45%, #4f7cff);
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 18px 20px;
+    box-shadow: 0 16px 28px rgba(19, 33, 73, 0.35);
+}
+
+.welcome-banner .text-muted {
+    color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.sidebar a.active-nav {
+    background: linear-gradient(135deg, rgba(79, 124, 255, 0.28), rgba(109, 77, 255, 0.28));
+    color: #ffffff;
+    font-weight: 600;
+    border-color: rgba(191, 219, 254, 0.5);
+    box-shadow: 0 8px 16px rgba(12, 24, 51, 0.35), inset 0 0 0 1px rgba(255,255,255,0.16);
+}
+
+.section-badge {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    border-radius: 999px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.dashboard-stats .stat-card h6 {
+    margin-bottom: 8px !important;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.dashboard-stats .stat-card h5 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.main-card .card-box {
+    text-align: left;
+}
+
+.main-card h4,
+.main-card h5 {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.main-card .table th {
+    border-top: 0;
+    color: #334155;
+    font-weight: 600;
+}
+
+.main-card .table td {
+    vertical-align: middle;
+}
+
+.main-card .btn {
+    border-radius: 10px;
+    font-weight: 600;
+    border-width: 1px;
+}
+
+.main-card .progress {
+    height: 10px;
+    border-radius: 10px;
+}
+
+@media (max-width: 767px) {
+    .content {
+        padding: 12px;
+    }
+
+    .sidebar {
+        padding-top: 12px;
+        position: static;
+    }
+
+    .dashboard-shell {
+        padding: 8px;
+        border-radius: 14px;
+    }
+
+    .dashboard-title {
+        font-size: 22px;
+    }
+
+    .welcome-banner {
+        padding: 14px;
+    }
+}
