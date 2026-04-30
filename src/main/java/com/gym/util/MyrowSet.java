@@ -11,6 +11,7 @@ public class MyrowSet{
 	public static JdbcRowSet Myrowset() {
 		JdbcRowSet jrs = null;
 		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			// Properties prop=new Properties();
 			// prop.load(new FileInputStream("/home/hemanthsai/eclipse-workspace/Myjars/src/com/DBconnection/jdbc.properties"));
 			// Class.forName(prop.getProperty("driver"));
