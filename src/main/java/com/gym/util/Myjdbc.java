@@ -9,7 +9,7 @@ public class Myjdbc{
 	public static Connection myconn() {
 		Connection con=null;
 		try {
-			
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			//load properties file
 			// Properties prop=new Properties();
 			// prop.load(new FileInputStream("/home/hemanthsai/eclipse-workspace/Myjars/src/com/DBconnection/jdbc.properties"));
