@@ -1,35 +1,38 @@
 package com.gym.util;
 
-import java.util.Properties;
-import java.sql.*;
-import java.io.FileInputStream;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+import java.sql.Connection;
 
+public class Myjdbc {
 
-public class Myjdbc{
-	public static Connection myconn() {
-		Connection con=null;
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			//load properties file
-			// Properties prop=new Properties();
-			// prop.load(new FileInputStream("/home/hemanthsai/eclipse-workspace/Myjars/src/com/DBconnection/jdbc.properties"));
-			// Class.forName(prop.getProperty("driver"));
-			String dbUrl = System.getenv("DB_URL");
-String dbUser = System.getenv("DB_USER");
-String dbPass = System.getenv("DB_PASSWORD");
-			con = DriverManager.getConnection(
-		                // prop.getProperty("url"),
-		                // prop.getProperty("username"),
-		                // prop.getProperty("password")
-				dbUrl,dbUser,dbPass
-		            );
-			
-			 }
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		return con;
-	
+    private static HikariDataSource ds;
 
-	}
+    static {
+        try {
+            String dbUrl = System.getenv("DB_URL");
+            String dbUser = System.getenv("DB_USER");
+            String dbPass = System.getenv("DB_PASSWORD");
+
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl(dbUrl);
+            config.setUsername(dbUser);
+            config.setPassword(dbPass);
+            config.setMaximumPoolSize(5);
+
+            ds = new HikariDataSource(config);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Connection myconn() {
+        try {
+            return ds.getConnection(); // 🔥 pooled connection
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
