@@ -2,152 +2,162 @@ package com.gym.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sql.rowset.JdbcRowSet;
 
 import com.gym.model.EventData;
 import com.gym.model.EventDesign;
 import com.gym.util.Myjdbc;
-import com.gym.util.MyrowSet;
-
 
 public class EventDAO implements EventDesign {
 
-	@Override
-	public void insertEvent(EventData event) {
-		Connection connection=Myjdbc.myconn();
-		try {
-		PreparedStatement preparedStatement=connection.prepareStatement("INSERT INTO events(title, description, event_date, is_new) VALUES (?, ?, ?, true)");
-		preparedStatement.setString(1,event.getTitle() );
-		preparedStatement.setString(2, event.getDescription());
-		preparedStatement.setString(3, event.getDate());
-		preparedStatement.executeUpdate();
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public void insertEvent(EventData event) {
+        try {
+            Connection con = Myjdbc.myconn();
 
-	@Override
-	public void deleteEvent(int id) {
-		Connection connection=Myjdbc.myconn();
-		try {
-			PreparedStatement preparedStatement=connection.prepareStatement("DELETE FROM events WHERE id=?");
-			preparedStatement.setInt(1,id);
-			preparedStatement.executeUpdate();
-			
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		
-	}
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO events(title, description, event_date, is_new) VALUES (?, ?, ?, true)"
+            );
 
-	@Override
-	public boolean countNotification() {
-		boolean hasNew=false;
-		JdbcRowSet jRowSet=MyrowSet.Myrowset();
-		try {
-			jRowSet.setCommand("SELECT COUNT(*) FROM events WHERE is_new = true");
-			jRowSet.execute();
-			
-			if(jRowSet.next())
-			{
-				if(jRowSet.getInt(1)>0)
-				 {
-					 hasNew=true;
-				 }
-			}
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return hasNew;
-	}
-@Override
-	public List<EventData> viewEvent(String filter) {
+            ps.setString(1, event.getTitle());
+            ps.setString(2, event.getDescription());
+            ps.setString(3, event.getDate());
 
-	    List<EventData> aList = new ArrayList<>();
-	    JdbcRowSet jSet = MyrowSet.Myrowset();
+            ps.executeUpdate();
 
-	    try {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	        String query = "SELECT * FROM events";
+    @Override
+    public void deleteEvent(int id) {
+        try {
+            Connection con = Myjdbc.myconn();
 
-	        if ("upcoming".equals(filter)) {
-	            query += " WHERE event_date >= CURDATE()";
-	        } 
-	        else if ("today".equals(filter)) {
-	            query += " WHERE event_date = CURDATE()";
-	        } 
-	        else if ("past".equals(filter)) {
-	            query += " WHERE event_date < CURDATE()";
-	        }
+            PreparedStatement ps = con.prepareStatement(
+                "DELETE FROM events WHERE id=?"
+            );
 
-	        // 🔥 Smart ordering
-	        query += " ORDER BY event_date ASC";
+            ps.setInt(1, id);
+            ps.executeUpdate();
 
-	        jSet.setCommand(query);
-	        jSet.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	        while (jSet.next()) {
+    @Override
+    public boolean countNotification() {
 
-	            EventData eData = new EventData();
-	            eData.setId(jSet.getInt("id"));
-	            eData.setTitle(jSet.getString("title"));
-	            eData.setDescription(jSet.getString("description"));
-	            eData.setDate(jSet.getString("event_date"));
+        boolean hasNew = false;
 
-	            aList.add(eData);
-	        }
+        try {
+            Connection con = Myjdbc.myconn();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT COUNT(*) FROM events WHERE is_new = true"
+            );
 
-	    return aList;
-	}
+            ResultSet rs = ps.executeQuery();
 
-	@Override
-	public void resetNotification() {
+            if (rs.next()) {
+                if (rs.getInt(1) > 0) {
+                    hasNew = true;
+                }
+            }
 
-	    try {
-	        Connection con = Myjdbc.myconn();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	        PreparedStatement ps = con.prepareStatement("UPDATE events SET is_new = false");
+        return hasNew;
+    }
 
-	        ps.executeUpdate();
+    @Override
+    public List<EventData> viewEvent(String filter) {
 
-	        ps.close();
-	        con.close();
+        List<EventData> list = new ArrayList<>();
 
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-		
-	}
+        try {
+            Connection con = Myjdbc.myconn();
 
-	@Override
-	public int Eventcount() {
-		 JdbcRowSet jRowSet=MyrowSet.Myrowset();
-		 int count=0;
-		try {
-			jRowSet.setCommand("SELECT COUNT(*) FROM events where event_date>=CURRENT_DATE");
-			jRowSet.execute();
-			
-			if(jRowSet.next())
-			{
-				count=jRowSet.getInt(1);
-			}
-		}catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return count;
-	}
+            String query = "SELECT * FROM events";
 
+            if ("upcoming".equals(filter)) {
+                query += " WHERE event_date >= CURDATE()";
+            } else if ("today".equals(filter)) {
+                query += " WHERE event_date = CURDATE()";
+            } else if ("past".equals(filter)) {
+                query += " WHERE event_date < CURDATE()";
+            }
+
+            query += " ORDER BY event_date ASC";
+
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                EventData e = new EventData();
+
+                e.setId(rs.getInt("id"));
+                e.setTitle(rs.getString("title"));
+                e.setDescription(rs.getString("description"));
+                e.setDate(rs.getString("event_date"));
+
+                list.add(e);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    @Override
+    public void resetNotification() {
+
+        try {
+            Connection con = Myjdbc.myconn();
+
+            PreparedStatement ps = con.prepareStatement(
+                "UPDATE events SET is_new = false"
+            );
+
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int Eventcount() {
+
+        int count = 0;
+
+        try {
+            Connection con = Myjdbc.myconn();
+
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT COUNT(*) FROM events WHERE event_date >= CURRENT_DATE"
+            );
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
 }
