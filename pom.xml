@@ -68,11 +68,7 @@
         </dependency>
 
         <!-- JSP Compiler (VERY IMPORTANT for JSP projects) -->
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <version>10.1.28</version>
-        </dependency>
+     
 
         <!-- JSTL (optional but recommended for JSP) -->
         <dependency>
