@@ -11,13 +11,17 @@ public class Myjdbc{
 		try {
 			
 			//load properties file
-			Properties prop=new Properties();
-			prop.load(new FileInputStream("/home/hemanthsai/eclipse-workspace/Myjars/src/com/DBconnection/jdbc.properties"));
-			Class.forName(prop.getProperty("driver"));
+			// Properties prop=new Properties();
+			// prop.load(new FileInputStream("/home/hemanthsai/eclipse-workspace/Myjars/src/com/DBconnection/jdbc.properties"));
+			// Class.forName(prop.getProperty("driver"));
+			String dbUrl = System.getenv("DB_URL");
+String dbUser = System.getenv("DB_USER");
+String dbPass = System.getenv("DB_PASSWORD");
 			con = DriverManager.getConnection(
-		                prop.getProperty("url"),
-		                prop.getProperty("username"),
-		                prop.getProperty("password")
+		                // prop.getProperty("url"),
+		                // prop.getProperty("username"),
+		                // prop.getProperty("password")
+				dbUrl,dbUser,dbPass
 		            );
 			
 			 }
